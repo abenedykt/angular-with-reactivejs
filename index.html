@@ -1,0 +1,53 @@
+<html slick-uniqueid="3">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Angular app with reactive js</title>
+    <script src="./Angular app with reactive js_files/jquery-1.8.3.js"></script>
+    <script src="./Angular app with reactive js_files/angular.min.js"></script>
+    <script src="./Angular app with reactive js_files/rx.js"></script>
+    <script src="./Angular app with reactive js_files/rx.async.js"></script>
+    <script src="./Angular app with reactive js_files/rx.binding.js"></script>
+    <script src="./Angular app with reactive js_files/rx.time.js"></script>
+    <script src="./Angular app with reactive js_files/rx.angular.js"></script>
+    <style>
+        ul#log {
+            list-style: none;
+        }
+
+            ul#log li {
+                display: inline-block;
+                float: left;
+                margin: 5px;
+            }
+    </style>
+</head>
+<body style="">
+    <div ng-app="wmsMapSettings" id="sfkjhsjkfsjkf" class="ng-scope">
+        <ul ng-controller="wmsMapControl" class="ng-scope">
+            <li>adres url<input ng-model="url" ng-change="checkUrl()" class="ng-valid ng-dirty"></li>
+        </ul>
+    </div>
+    <ul id="log"></ul>
+    <script>
+
+        var wmsMapSettings = angular.module('wmsMapSettings', []);
+
+        function wmsMapControl($scope, $http) {
+            $scope.url = "http://some.url.in.the.wild:8080";
+
+            $scope.checkUrl = function () {
+                $('#log').append('<li>change</li>');
+            }
+
+            Rx.watchToObservable($scope, 'url').throttle(500).subscribe(validateUrl);
+        }
+
+        //angular.bootstrap($('#sfkjhsjkfsjkf'));
+
+        var validateUrl = function () {
+            $('#log').append('<li> !!validate!! </li>');
+        }
+    </script>
+</body>
+</html>
